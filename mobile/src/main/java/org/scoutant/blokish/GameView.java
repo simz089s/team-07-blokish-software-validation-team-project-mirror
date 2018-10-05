@@ -73,8 +73,8 @@ public class GameView extends FrameLayout {
 	public SharedPreferences prefs;
 	public boolean thinking=false;
 	public boolean singleline=false;
-    int secondLineOffset = 0;
-    int singleLineOffset = 0;
+    	int secondLineOffset = 0;
+    	int singleLineOffset = 0;
 	public BusyIndicator indicator;
 	public PieceUI lasts[] = new PieceUI[4];
 	
