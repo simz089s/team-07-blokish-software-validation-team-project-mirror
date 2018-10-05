@@ -32,6 +32,7 @@ public class AI  {
 	public Game game;
 	private Random random = new Random();
 	
+	// array to store the max number of moves for level 1 to 4
 	private int[] maxMoves = { 40, 100, 250, 10000 };
 
 	public int adaptedLevel = 3;
