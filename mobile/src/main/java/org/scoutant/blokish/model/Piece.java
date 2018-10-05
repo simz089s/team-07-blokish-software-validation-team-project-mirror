@@ -139,9 +139,9 @@ public class Piece {
  }
 
  public String toLabel() {
-//  return "[" + type + ", " + r + ", " +f + " ]";
   return type;
  }
+ 
  @Override
  public String toString() {
   String str = type + "\n";
