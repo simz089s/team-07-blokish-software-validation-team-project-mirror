@@ -24,7 +24,6 @@ public class Game {
 	public static final String tag = "sc";
 	public List<Board> boards = new ArrayList<Board>();
 	public int size = 20;
-//	public String[] colors = { "Red", "Green", "Blue", "Orange" };
 	public int[] colors = { R.string.Red, R.string.Green, R.string.Blue, R.string.Orange };
 	public Game() {
 		reset();
@@ -124,11 +123,11 @@ public class Game {
 		// how many of the board's seeds happen to be under piece?
 		int result=0;
 		for (int b=0; b<20; b++) for (int a=0; a<20; a++) ab[a][b] = 0;
-		for(Square s : board.seeds()) {
-			try { ab[s.i][s.j] = 1; } catch (Exception e) {}
+		for(Square square : board.seeds()) {
+			try { ab[square.i][square.j] = 1; } catch (Exception e) {}
 		}
-		for(Square s : piece.squares()) {
-			try { ab[i+s.i][j+s.j] = 0; } catch (Exception e) {}
+		for(Square square : piece.squares()) {
+			try { ab[i+square.i][j+square.j] = 0; } catch (Exception e) {}
 		}
 		for (int b=0; b<20; b++) for (int a=0; a<20; a++) if (ab[a][b]==1) result++;
 //		Log.d(tag, "scoreEnemySeedsIfAdding : " + result + ". color : " + board.color);
