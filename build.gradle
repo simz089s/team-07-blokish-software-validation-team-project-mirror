@@ -16,3 +16,11 @@ allprojects {
         google()
     }
 }
+
+plugins {
+  id "org.sonarqube" version "2.6.2"
+}
+
+sonarqube {
+    androidVariant 'fullDebug'
+}
