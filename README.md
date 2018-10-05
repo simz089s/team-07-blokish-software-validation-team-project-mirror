@@ -1,4 +1,7 @@
-﻿Blokish
+ECSE429 Software Validation Project
+Documentation for this project can be found on the project wiki at https://github.com/McGill-ECSE429-Fall2018/team-07-blokish/wiki
+
+Blokish
 =======
 ![blokish](http://blokish.scoutant.org/blokish_nexus_6)
 
