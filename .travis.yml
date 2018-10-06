@@ -21,7 +21,7 @@ cache:
 dist: trusty
 sudo: required
 language: java
-jdk: oraclejdk7
+jdk: oraclejdk8
 
 # script:
 #   - curl https://github.com/facebook/infer/releases/download/v0.15.0/infer-linux64-v0.15.0.tar.xz
