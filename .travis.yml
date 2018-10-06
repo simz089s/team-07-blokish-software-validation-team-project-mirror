@@ -4,9 +4,25 @@ android:
     - build-tools-27.0.3
     - android-27
     - extra
-  
-  addons:
-  sonarcloud:
-    organization: "ecse429g7"
-    token:
-      secure: "c0c221349d00f6702d64808145f124de81a253ae"
+
+#before_cache:
+#  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    # Gradle
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+    # Android SDK
+    - $HOME/android-sdk-dl
+    - $HOME/android-sdk
+env:
+  - ANDROID_HOME=$HOME/android-sdk
+
+#addons:
+
+#sonarcloud:
+#  organization: "ecse429-fall2018"
+#  token:
+#    secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
