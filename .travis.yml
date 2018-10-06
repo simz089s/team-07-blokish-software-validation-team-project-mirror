@@ -4,9 +4,13 @@ android:
     - build-tools-27.0.3
     - android-27
     - extra
-  
-  addons:
-  sonarcloud:
-    organization: "ecse429g7"
-    token:
-      secure: "c0c221349d00f6702d64808145f124de81a253ae"
+
+dist: trusty
+sudo: required
+language: java
+jdk: oraclejdk7
+
+script:
+ - #TODO: get infer archive and extract it
+ - #TODO: add infer executable to the path
+ - #TODO: invoke infer with your project
