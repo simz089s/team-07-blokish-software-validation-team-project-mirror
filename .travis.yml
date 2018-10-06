@@ -7,6 +7,6 @@ android:
   
   addons:
   sonarcloud:
-    organization: "ecse429g7"
+    organization: "ecse429-fall2018"
     token:
-      secure: "c0c221349d00f6702d64808145f124de81a253ae"
+      secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
