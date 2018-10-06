@@ -23,13 +23,13 @@ cache:
 # language: java
 # jdk: oraclejdk8
 
-# # script:
-# #   - curl https://github.com/facebook/infer/releases/download/v0.15.0/infer-linux64-v0.15.0.tar.xz
-# #   - tar -xvf infer-linux64-v0.15.0.tar.xz
-# #   - ./infer-linux64-v0.14.0/install-sh
-# #   - export infer = 
-# #   - #TODO: add infer executable to the path
-# #   - infer -- ./gradlew build
 # script:
-# - ./installInfer
-# - infer -- ./gradlewbuild
+#   - curl https://github.com/facebook/infer/releases/download/v0.15.0/infer-linux64-v0.15.0.tar.xz
+#   - tar -xvf infer-linux64-v0.15.0.tar.xz
+#   - ./infer-linux64-v0.14.0/install-sh
+#   - export infer = 
+#   - #TODO: add infer executable to the path
+#   - infer -- ./gradlew build
+script:
+- ./installInfer
+- infer -- ./gradlew build
