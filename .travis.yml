@@ -5,6 +5,10 @@ android:
     - android-27
     - extra
 
+dist: trusty
+sudo: required
+jdk: oraclejdk7
+
 #before_cache:
 #  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 #  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -15,10 +19,19 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
     # Android SDK
-    - $HOME/android-sdk-dl
-    - $HOME/android-sdk
-env:
-  - ANDROID_HOME=$HOME/android-sdk
+    #- $HOME/android-sdk-dl
+    #- $HOME/android-sdk
+    # Tutorial
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
+script:
+  - #TODO: get infer archive and extract it
+  - #TODO: add infer executable to the path
+  - #TODO: invoke infer with your project
+
+#env:
+#  - ANDROID_HOME=$HOME/android-sdk
 
 #addons:
 
