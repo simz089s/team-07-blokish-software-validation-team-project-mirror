@@ -27,11 +27,11 @@ allprojects {
 apply plugin: "com.github.spotbugs"
 
 spotbugs {
-        toolVersion = "3.1.3"
-        sourceSets = [sourceSets.main]
-        ignoreFailures = true
-        effort = "max"
-    }
+  toolVersion = '3.1.7'
+}
+dependencies {
+  spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
+}
 
 sourceSets {
   // we define `main` sourceSet here, so SpotBugs Gradle Plugin generates `spotbugsMain` task
