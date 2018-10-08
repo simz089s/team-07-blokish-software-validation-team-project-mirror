@@ -3,14 +3,18 @@ buildscript {
         mavenCentral()
         jcenter()
         google()
-        
-        maven {
-           url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.3'
         spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        google()
     }
 }
 
@@ -26,6 +30,7 @@ sourceSets {
   tasks.withType(com.github.spotbugs.SpotBugsTask) {
   // configure automatically generated tasks
 }
+
 allprojects {
     repositories {
         mavenCentral()
@@ -33,22 +38,3 @@ allprojects {
         google()
     }
 }
-
-// plugins {
-//   id "com.github.spotbugs" version "1.6.4"
-// }
-// apply plugin: "com.github.spotbugs"
-
-// spotbugs {
-//   toolVersion = '3.1.7'
-// }
-// dependencies {
-//   spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
-// }
-
-// sourceSets {
-//   // we define `main` sourceSet here, so SpotBugs Gradle Plugin generates `spotbugsMain` task
-//   main {
-//     java.srcDirs = ['mobile/src/main/java']
-//   }
-// }
