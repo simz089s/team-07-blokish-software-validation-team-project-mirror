@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'pmd'
 
 android {
     compileSdkVersion 27 // Api 8.1
@@ -35,4 +34,15 @@ android {
         unitTests.returnDefaultValues = true
     }
 
+}
+
+apply plugin: 'pmd'
+
+pmd {
+    ignoreFailures = true
+    ruleSets = [
+            "quickstart",
+            "basic",
+            "braces"
+    ]
 }

@@ -17,12 +17,12 @@ cache:
     - $HOME/.android/build-cache
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
-    - $HOME/pmd-bin-6.8.0/
+#    - $HOME/pmd-bin-6.8.0/
 
 script:
   - ./gradlew build connectedCheck
   - ./gradlew check
-  - gradle check
+  - ./gradlew pmdTest
 #  - cd $HOME
 #  - wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.8.0/pmd-bin-6.8.0.zip
 #  - yes | unzip pmd-bin-6.8.0.zip
