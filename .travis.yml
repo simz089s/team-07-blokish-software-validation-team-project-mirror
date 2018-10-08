@@ -1,19 +1,19 @@
-# branches:
-#   except:
-#   - inferElv
-
 language: android
 android:
   components:
     - build-tools-27.0.3
     - android-27
     - extra
-
+  
+  addons:
+  sonarcloud:
+    organization: "ecse429-fall2018"
+    token:
+      secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
 
 before_cache:
  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
 cache:
   directories:
     # Gradle
@@ -23,20 +23,9 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-script:
-- ./installInfer
-
-script:
-  - ./gradlew build connectedCheck
-  - #TODO: add infer executable to the path
-  - #TODO: invoke infer with your project
-
-#env:
-#  - ANDROID_HOME=$HOME/android-sdk
-
-#addons:
-
-#sonarcloud:
-#  organization: "ecse429-fall2018"
-#  token:
-#    secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
+jobs:
+  include:
+  - script:
+    - ./gradlew build connectedCheck
+  - script:
+    - ./installInfer
