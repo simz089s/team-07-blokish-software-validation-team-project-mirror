@@ -23,15 +23,12 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-script: 
-  - ./gradlew build connectedCheck
-  - ./installInfer
-# jobs:
-#   include:
-#   - script:
-#     - ./gradlew build connectedCheck
-#   - script:
-#     - ./installInfer
+jobs:
+  include:
+  - script:
+    - ./gradlew build connectedCheck
+  - script:
+    - ./installInfer
 #   - script:
 #     - ./gradlew sonarqube \
 #     -Dsonar.projectKey=ecse429-team-07-blokish \
