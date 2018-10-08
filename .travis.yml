@@ -32,4 +32,3 @@ cache:
 #   - infer -- ./gradlew build
 script:
 - ./installInfer
-- infer -- ./gradlew build
