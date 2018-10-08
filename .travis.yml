@@ -23,7 +23,7 @@ script:
   - wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.8.0/pmd-bin-6.8.0.zip
   - unzip pmd-bin-6.8.0.zip
   - alias pmd="$HOME/pmd-bin-6.8.0/bin/run.sh pmd"
-  - pmd -d ./mobile/src/test/java/org/scoutant/blokish/model/* -R rulesets/java/quickstart.xml -f text
+  - $HOME/pmd-bin-6.8.0/bin/run.sh pmd -d ./mobile/src/test/java/org/scoutant/blokish/model/* -R rulesets/java/quickstart.xml -f text
 
 #env:
 #  - ANDROID_HOME=$HOME/android-sdk
