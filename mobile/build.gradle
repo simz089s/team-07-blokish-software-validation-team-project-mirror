@@ -35,3 +35,15 @@ android {
     }
 
 }
+
+apply plugin: 'pmd'
+
+pmd {
+    consoleOutput = true
+    ignoreFailures = true
+    ruleSets = [
+            "quickstart",
+            "basic",
+            "braces"
+    ]
+}
