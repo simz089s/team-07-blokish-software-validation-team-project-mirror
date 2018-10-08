@@ -9,6 +9,11 @@ android:
     - android-27
     - extra
 
+
+before_cache:
+ - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+ - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     # Gradle
@@ -18,17 +23,20 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-# dist: trusty
-# sudo: required
-# language: java
-# jdk: oraclejdk8
-
-# script:
-#   - curl https://github.com/facebook/infer/releases/download/v0.15.0/infer-linux64-v0.15.0.tar.xz
-#   - tar -xvf infer-linux64-v0.15.0.tar.xz
-#   - ./infer-linux64-v0.14.0/install-sh
-#   - export infer = 
-#   - #TODO: add infer executable to the path
-#   - infer -- ./gradlew build
 script:
 - ./installInfer
+
+script:
+  - ./gradlew build connectedCheck
+  - #TODO: add infer executable to the path
+  - #TODO: invoke infer with your project
+
+#env:
+#  - ANDROID_HOME=$HOME/android-sdk
+
+#addons:
+
+#sonarcloud:
+#  organization: "ecse429-fall2018"
+#  token:
+#    secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
