@@ -1,0 +1,5 @@
+#!/bin/bash
+wget https://github.com/facebook/infer/releases/download/v0.15.0/infer-linux64-v0.15.0.tar.xz -O infer-linux64-v0.15.0.tar.xz
+tar -xvf infer-linux64-v0.15.0.tar.xz
+export PATH=`pwd`/infer-linux64-v0.15.0/bin:$PATH
+infer -- ./gradlew build

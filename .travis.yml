@@ -23,6 +23,9 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-  script:
+jobs:
+  include:
+  - script:
     - ./gradlew build connectedCheck
-
+  - script:
+    - ./installInfer
