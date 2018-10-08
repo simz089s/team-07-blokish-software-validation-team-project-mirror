@@ -23,7 +23,7 @@ script:
   - ./gradlew build connectedCheck
   - ./gradlew test
   - ./gradlew check
-  - cat $HOME/build/McGill-ECSE429-Fall2018/team-07-blokish/mobile/build/reports/*
+#  - cat $HOME/build/McGill-ECSE429-Fall2018/team-07-blokish/mobile/build/reports/*
 #  - cd $HOME
 #  - wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.8.0/pmd-bin-6.8.0.zip
 #  - yes | unzip pmd-bin-6.8.0.zip
