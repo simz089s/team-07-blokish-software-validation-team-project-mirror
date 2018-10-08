@@ -10,3 +10,22 @@ android:
     organization: "ecse429-fall2018"
     token:
       secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
+
+before_cache:
+ - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+ - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    # Gradle
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
+script:
+  - ./gradlew sonarqube \
+  -Dsonar.projectKey=ecse429-team-07-blokish \
+  -Dsonar.organization=ecse429-fall2018 \
+  -Dsonar.host.url=https://sonarclound.io \
+  -Dsonar.login=2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03
