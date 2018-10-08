@@ -30,6 +30,7 @@ sourceSets {
   tasks.withType(com.github.spotbugs.SpotBugsTask) {
   // configure automatically generated tasks
 }
+}
 
 allprojects {
     repositories {
