@@ -21,6 +21,8 @@ cache:
 
 script:
   - ./gradlew build connectedCheck
+  - ./gradlew check
+  - gradle check
 #  - cd $HOME
 #  - wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.8.0/pmd-bin-6.8.0.zip
 #  - yes | unzip pmd-bin-6.8.0.zip
