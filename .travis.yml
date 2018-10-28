@@ -4,12 +4,7 @@ android:
     - build-tools-27.0.3
     - android-27
     - extra
-  
-  addons:
-  sonarcloud:
-    organization: "ecse429-fall2018"
-    token:
-      secure: "2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03"
+
 
 before_cache:
  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -23,6 +18,7 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
+script:
+  - ./gradlew build
 
-- script:
-    - ./gradlew test
+
