@@ -70,7 +70,17 @@ public class AITest {
 	}
 	public void testOverlapsFalse(){
 		Piece mockPiece = mock(Piece.class);
-		when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(Square(1, 1))));
+		when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(Square(1, 1), Square(2, 2))));
+		for (int i = 0; i<20; i++){
+			for (int j = 0; j<20; j++){
+				board.ij[i][j] = 0;
+			}
+		}
+		assertFalse(ai.overlaps(color,mockPiece, 0, 0));
+	}
+	public void testOverlapsEmpty(){	//Never happens in practicality but still here for loop coverage
+		Piece mockPiece = mock(Piece.class);
+		when(mockPiece.squares()).thenReturn(new ArrayList<Square>());
 		for (int i = 0; i<20; i++){
 			for (int j = 0; j<20; j++){
 				board.ij[i][j] = 0;
