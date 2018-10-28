@@ -72,7 +72,7 @@ public class BoardTest {
 					}
 				}
 			}
-			assertFalse(colorInitialized);
+			assertFalse(colorInitialized); // Fails if assertTrue
 		}
 	}
 
@@ -99,7 +99,7 @@ public class BoardTest {
 	@Test
 	public void testAdd() {
 
-		Piece piece = new Piece(0, 3, "L4", 4, 2).add(new Square(0,0,5));
+		Piece piece_stub = new Piece(0, 3, "L4", 4, 2).add(new Square(0,0,5));
 
 		// cover condition inside the first loop
 		int ij = board.ij[0][0];
@@ -107,9 +107,9 @@ public class BoardTest {
 		assertTrue(ij != board.ij[0][0]);
 
 		// cover condition after the first for loop: piece color matches board color
-		piece.count = 1;
+		piece_stub.count = 1;
 		int score = board.score;
-		board.add(piece, 0, 0);
+		board.add(piece_stub, 0, 0);
 		assertTrue(board.score > score);
 	}
 
@@ -205,9 +205,12 @@ public class BoardTest {
 	// Branch coverage
 	@Test
 	public void testOnseed() {
+		// condition is true
 		assertTrue( board.onseed(L4, 0, 1));
+		// condition is false
 		assertFalse( board.onseed(L4, 2, 4));
 		board.add(L4, 0, 1);
+		// condition is true
 		assertTrue( board.onseed(L4, 2, 4));
 	}
 
