@@ -7,8 +7,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.Date;
 import java.util.List;
-
+import java.util.ArrayList;
 import org.junit.Assert;
+
 import static org.mockito.Mockito.*;
 import static org.mockito.Matchers.*;
 public class AITest {
@@ -27,18 +28,15 @@ public class AITest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		game = mock(Game.class);
-		board = mock(Board.class);
-		date = mock(Date.class);
 	}
 
 	@Before
 	public void setUp() throws Exception {
-	// 	game = new Game();
-	// 	board = game.boards.get(color);
-	// 	ai = new AI(game);
-	// 	pieces = board.pieces;
-    // pieces.clear();
+	 	game = new Game();
+	 	board = game.boards.get(color);
+	 	ai = new AI(game);
+	 	pieces = board.pieces;
+     	pieces.clear();
 
 //    L4 = board.findPieceByType("L4");
 //		P5 = board.findPieceByType("P5");
@@ -58,10 +56,27 @@ public class AITest {
 		ai.autoAdaptLevel(now.getTime()-2500);
 		assertEquals(ai.adaptedLevel, 2);
 	}
-	
+	//Statement coverage tests for overlaps
 	@Test
 	public void testOverlapsTrue(){
-
+		Piece mockPiece = mock(Piece.class);
+		when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(Square(1, 1))));
+		for (int i = 0; i<20; i++){
+			for (int j = 0; j<20; j++){
+				board.ij[i][j] = 1;
+			}
+		}
+		assertTrue(ai.overlaps(color,mockPiece, 0, 0));
+	}
+	public void testOverlapsFalse(){
+		Piece mockPiece = mock(Piece.class);
+		when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(Square(1, 1))));
+		for (int i = 0; i<20; i++){
+			for (int j = 0; j<20; j++){
+				board.ij[i][j] = 0;
+			}
+		}
+		assertFalse(ai.overlaps(color,mockPiece, 0, 0));
 	}
 	// @Test
 	// public void testThinkEmptyBoard() {
