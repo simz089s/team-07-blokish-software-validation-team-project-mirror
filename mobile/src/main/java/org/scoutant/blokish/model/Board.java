@@ -95,7 +95,8 @@ public class Board {
 		pieces.add( new Piece(color, 1, "O1", 1, 1).add(0,0));
 		nbPieces = pieces.size();
 	}
-	
+
+	// Branch coverage
 	public Piece findPieceByType(String type) {
 		for (Piece piece:pieces) {
 			if (piece.type.equals(type)) return piece;
