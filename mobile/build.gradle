@@ -31,6 +31,7 @@ android {
         release {
             minifyEnabled false
         }
+
         debug {
             testCoverageEnabled true
         }
@@ -53,6 +54,7 @@ pmd {
             "braces"
     ]
 }
+
 apply plugin: 'jacoco'
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
