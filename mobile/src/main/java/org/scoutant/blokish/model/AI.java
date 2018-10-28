@@ -104,7 +104,7 @@ public class AI  {
 		move.piece.reset(move.ghost);
 		return move;
 	}
-	protected List<Move> thinkUpToNMoves(int color, int level) {
+	protected List<Move> thinkUpToNMoves(int color, int level) { // ECSE429: build search tree?
 		List<Move> moves = new ArrayList<Move>();
 		Board board = game.boards.get(color);
 		// Most of time , in the middle of the game, any player has about 10 to 20 seeds.
@@ -134,6 +134,7 @@ public class AI  {
 								if (!game.valid(move)) {
 									Log.e(tag, "Inconsistant ! "+move);
 								}
+								// ECSE429: scoring functions and heuristics with weights (so that's what they are for)?
 								int score = SIZE_WEIGHT * piece.count;
 								if (board.pieces.size()> board.nbPieces-5) {
 									// encourage moving to the center, this extra bonus only for pentaminos
@@ -170,13 +171,13 @@ public class AI  {
 		return moves;
 	}
 
-	private int[][] ij = new int [20][20];
+	private int[][] ij = new int [20][20]; // ECSE429: represents...board???
 	
 	/**
 	 * Considering we play given @param move. 
 	 * @return true if we may place a piece on newly created seeds.
 	 */
-	protected int chainingScore(int color, Move move) {
+	protected int chainingScore(int color, Move move) { // ECSE429: some AI move tree depth search back propagation something?
 		Board board = game.boards.get(color);
 		Piece played = move.piece;
 		List<Piece> pieces = new ArrayList<Piece>();
@@ -227,7 +228,7 @@ public class AI  {
 		return score;
 	}
 	
-	public boolean overlaps( int color, Piece piece, int i, int j) {
+	public boolean overlaps( int color, Piece piece, int i, int j) { // ECSE429: check if pieces overlap?
 		for(Square s : piece.squares()) {
 			int I = i+s.i;
 			int J = j+s.j;
@@ -237,7 +238,7 @@ public class AI  {
 	}
 
 	
-	private void autoAdaptLevel(long startedAt) {
+	private void autoAdaptLevel(long startedAt) { // ECSE429: AI gets easier with time
 		long duration = new Date().getTime()- startedAt;
 		Log.d(tag, "lasted : " + duration );
 		if (duration > 2500 && adaptedLevel>0) {
