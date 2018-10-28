@@ -23,15 +23,15 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-jobs:
-  include:
-  - script:
-    - ./gradlew build connectedCheck
-  - script:
-    - ./gradlew test
-    - ./gradlew check
-    - cat $HOME/build/McGill-ECSE429-Fall2018/team-07-blokish/mobile/build/reports/*.xml
-  - script:
-    - ./installInfer
-  - script:
-    - ./gradlew sonarqube \ -Dsonar.projectKey=ecse429-team-07-blokish \ -Dsonar.organization=ecse429-fall2018 \ -Dsonar.host.url=https://sonarclound.io \ -Dsonar.login=2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03
+#jobs:
+#  include:
+#  - script:
+#    - ./gradlew build connectedCheck
+#  - script:
+#    - ./gradlew test
+#    - ./gradlew check
+#    - cat $HOME/build/McGill-ECSE429-Fall2018/team-07-blokish/mobile/build/reports/*.xml
+#  - script:
+#    - ./installInfer
+#  - script:
+#    - ./gradlew sonarqube \ -Dsonar.projectKey=ecse429-team-07-blokish \ -Dsonar.organization=ecse429-fall2018 \ -Dsonar.host.url=https://sonarclound.io \ -Dsonar.login=2e3073f1369a0d6355aeb3c6b56f2ab80e6d9a03
