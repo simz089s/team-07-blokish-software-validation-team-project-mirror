@@ -25,3 +25,4 @@ cache:
 
 - script:
   - ./gradlew test
+  - ./gradlew jacocoTestReport

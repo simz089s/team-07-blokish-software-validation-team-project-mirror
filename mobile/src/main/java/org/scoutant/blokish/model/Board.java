@@ -55,7 +55,7 @@ public class Board {
 	public boolean over=false;
 	int[][] ab = new int [20][20];
 
-	// add pieces to the board and initialize one of the corners to 1 depending on the color given as input
+	// ECSE429: add pieces to the board and initialize one of the corners to 1 depending on the color given as input
 	public Board(int color) {
 		this.color = color;
 		if (color==0) ij[0][0]=1;
@@ -97,7 +97,7 @@ public class Board {
 		nbPieces = pieces.size();
 	}
 
-	// loop through the pieces array and checks if the inputed type of Piece is present
+	// ECSE429: loop through the pieces array and checks if the inputed type of Piece is present
 	public Piece findPieceByType(String type) {
 		for (Piece piece:pieces) {
 			if (piece.type.equals(type)) return piece;
@@ -105,7 +105,7 @@ public class Board {
 		return null;
 	}
 	
-	// add a piece (precisely its value) to the ij array
+	// ECSE429: add a piece (precisely its value) to the ij array
 	public void add( Piece piece, int i, int j) {
 		for(Square s : piece.squares(this.color)) {
 			// TODO refactor without try / catch
@@ -140,12 +140,12 @@ public class Board {
 		return result;
 	}
 	
-	// checks if the inputed index is outside of the board extremities 
+	// ECSE429: checks if the inputed index is outside of the board extremities
 	public boolean outside(Square s, int i, int j) {
 		return ( s.i+i<0 || s.i+i>=size || s.j+j<0 || s.j+j>=size );
 	}
 	
-	// check if the inputed index overlaps
+	// ECSE429: check if the inputed index overlaps
 	public boolean overlaps( int color, Piece piece, int i, int j) {
 		for(Square s : piece.squares()) {
 			if (outside(s, i, j)) return true;
@@ -154,13 +154,13 @@ public class Board {
 		return false;
 	}
 	
-	// check if the indexes i,j fit within the board and that they don't overlap
+	// ECSE429: check if the indexes i,j fit within the board and that they don't overlap
 	public boolean fits( int color, Piece piece, int i, int j) {
 		if (i<-1 || i> size || j<-1 || j>size) return false; 
 		return ! overlaps( color, piece, i, j);
 	}
 	
-	// check if there is a 1 at the position specificed by indexes i, j in ij array
+	// ECSE429: check if there is a 1 at the position specificed by indexes i, j in ij array
 	public boolean onseed( Piece piece, int i, int j) {
 		for(Square s : piece.squares()) {
 			if ( !outside(s, i, j) && ij[i+s.i][j+s.j]==1) return true;
@@ -181,7 +181,7 @@ public class Board {
 		return str;
 	}
 
-	// list all squares for which the position is 1 in the ij array
+	// ECSE429: list all squares for which the position is 1 in the ij array
 	public List<Square> seeds() {
 		List<Square> list = new ArrayList<Square>();
 		for (int j=0; j<size; j++) {
