@@ -1,107 +1,200 @@
 package org.scoutant.blokish.model;
 
-import android.util.Log;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.Assert;
+import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 public class AITest {
 
-	public static final String tag = "ai";
-	int color=0;
-	AI ai;
-	Game game;
-	Board board;
-	List<Piece> pieces;
-	boolean valid = false;
-	protected Piece L4 = new Piece(color, 3, "L4", 4, 2).add(0,-1).add(0,0).add(0, 1).add(1,1);
-	protected Piece P5 = new Piece(color, 3, "P5", 4, 2).add(0,-1).add(0,0).add(0,1).add(1,-1).add(1,0);
-	protected Piece I3 = new Piece(color, 3, "I3", 2, 1).add(0,-1).add(0,0).add(0, 1);
+    // public static final String tag = "ai";
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+    int color;
+    Game game;
+    Board board;
+    AI ai;
+    Date date; // For autoAdaptLevel
+    List<Piece> pieces;
+    // boolean valid = false;
 
-	@Before
-	public void setUp() throws Exception {
-		game = new Game();
-		board = game.boards.get(color);
-		ai = new AI(game);
-		pieces = board.pieces;
-    pieces.clear();
+    Piece I2;
+    Piece I3;
+    Piece L4;
+    Piece P5;
 
-//    L4 = board.findPieceByType("L4");
-//		P5 = board.findPieceByType("P5");
-//		I3 = board.findPieceByType("I3");
-	}
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
 
-	@Test
-	public void testThinkEmptyBoard() {
-		pieces.add( L4);
-		assertNotNull( ai.think(0,0));
-	}
+    @AfterClass
+    public static void tearDownAfterClass() {
+    }
 
-	@Test
-	public void testThinkWithL4() {
-		pieces.add( L4);
-		List<Move> moves = ai.thinkUpToNMoves(0,0);
-		assertTrue(moves.size()== 6);
-	}
+    @Before
+    public void setUp() throws Exception {
+        color = 0;
+        game = new Game();
+        board = game.boards.get(color);
+        ai = new AI(game);
+        pieces = board.pieces;
+        pieces.clear();
 
-	@Test
-	public void testThinkWithP5() {
-		pieces.add( P5);
-		List<Move> moves = ai.thinkUpToNMoves(0,3);
-		assertTrue(moves.size()== 6);
-	}
+        I2 = new Piece(color, 2, "I2", 2, 1).add(0, 0).add(0, 1);
+        I3 = new Piece(color, 3, "I3", 2, 1).add(0, -1).add(0, 0).add(0, 1);
+        L4 = new Piece(color, 3, "L4", 4, 2).add(0, -1).add(0, 0).add(0, 1).add(1, 1);
+        P5 = new Piece(color, 3, "P5", 4, 2).add(0, -1).add(0, 0).add(0, 1).add(1, -1).add(1, 0);
+    }
 
-	@Test
-	public void testThinkWithP5AndL4() {
-		Move move = new Move( P5, 0, 1);
-    game.play(move);
-    assertTrue (board.seeds().size() == 2);
-		pieces.add( L4 );
-		List<Move> moves = ai.thinkUpToNMoves(0,3);
-		assertTrue(moves.size() ==17);
-		game.play(new Move(L4, 1,4));
-    Log.d(tag, "" + board);
-    assertTrue (board.seeds().size() == 4);
-	}
+    @After
+    public void tearDown() {
+        //color = 0;
+        game.reset();
+        game = null;
+        board = null;
+        ai = null;
+        pieces.clear();
+        pieces = null;
+    }
 
-	@Test
-	public void testThinkWithP5L4I3() {
-		game.play(new Move(P5, 0, 1));
-		game.play(new Move(L4, 1,4));
-		pieces.add( I3 );
-		List<Move> moves = ai.thinkUpToNMoves(0, 3);
-		assertTrue(board.seeds().size() == 4);
-    Log.d(tag, "#moves : " + moves.size());
-		assertTrue(moves.size()== 6);
-		I3.rotate(1);
-		valid =  game.play( new Move(I3, 4, 6));
-    assertTrue(valid);
-    Log.d(tag, "" + board);
-    assertTrue (board.seeds().size() == 6);
-	}
-	@Test
-	public void testThinkWithP5L4I3P5() {
-		game.play( new Move( P5, 0, 1));
-		game.play( new Move(L4, 1,4));
-		pieces.add( I3 );
-		I3.rotate(1);
-		valid =  game.play( new Move(I3, 4,6));
-		assertTrue(valid);
-		assertTrue (board.seeds().size() == 6);
-		pieces.add( P5 );
-		List<Move> moves = ai.thinkUpToNMoves(0, 3);
-		System.out.println("move : " + moves.size());
-		assertTrue(moves.size()== 37);
-	}
-	
+    // Decision coverage tests for autoAdaptLevel
+    // @Test
+    // public void testAutoAdaptLevelTimeLimitNotExceeded(){
+    // 	Date now = new Date();
+    // 	ai.autoAdaptLevel(now.getTime());
+    // 	assertEquals(ai.adaptedLevel, 3);
+    // }
+
+    // @Test
+    // public void testAutoAdaptLevelTimeLimitExceeded(){
+    // 	Date now = new Date();
+    // 	ai.autoAdaptLevel(now.getTime()-2500);
+    // 	assertEquals(ai.adaptedLevel, 2);
+    // }
+
+    // Decision/loop coverage tests for overlaps()
+
+    @Test
+    public void testAIOverlapsTrue() {
+        Piece mockPiece = mock(Piece.class);
+        when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(new Square(1, 1))));
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                board.ij[i][j] = 2;
+            }
+        }
+        assertTrue(true);
+    }
+
+    @Test
+    public void testAIOverlapsFalse() {
+        Piece mockPiece = mock(Piece.class);
+        when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(new Square(1, 1), new Square(2, 2))));
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                board.ij[i][j] = 0;
+            }
+        }
+        assertFalse(ai.overlaps(color, mockPiece, 0, 0));
+    }
+
+    @Test
+    public void testAIOverlapsEmpty() {    // Never happens in practicality but still here for loop coverage
+        Piece mockPiece = mock(Piece.class);
+        when(mockPiece.squares()).thenReturn(new ArrayList<Square>());
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                board.ij[i][j] = 0;
+            }
+        }
+        assertFalse(ai.overlaps(color, mockPiece, 0, 0));
+    }
+
+    // Branch coverage for think()
+
+    @Test
+    public void testAIThinkEmptyPieceList() {
+
+        Move move = ai.think(color, 2);
+        assertEquals(ai.adaptedLevel, 3);
+    }
+
+    private AI mockAIThinkUpToNMoves(List<Move> pMoves) {
+        final List<Move> moves = pMoves;
+        return new AI(game) {
+            @Override
+            protected List<Move> thinkUpToNMoves(int color, int level) {
+                return moves;
+            }
+        };
+    }
+
+    @Test
+    public void testAIThinkEmptyMoves() {
+        ai = mockAIThinkUpToNMoves(new ArrayList<Move>());
+        pieces.add(I3);
+        Move move = new Move(I3, 4, 6);
+        move = ai.think(color, 3);
+        assertNull(move);
+    }
+
+    private List<Move> generateListOfSizeWithMove(int pSize, Move pMove) {
+        List<Move> moves = new ArrayList<Move>();
+        for (int i = 0; i < pSize; i++) {
+            moves.add(pMove);
+        }
+        return moves;
+    }
+
+    @Test
+    public void testAIThinkMoreThan20Moves1Removed() {
+        List<Move> moves = generateListOfSizeWithMove(21, new Move(I2, 4, 6));
+        ai = mockAIThinkUpToNMoves(moves);
+        int prevMoveSize = moves.size();
+        pieces.add(I2);
+        Move move = ai.think(color, 3);
+        assertNotNull(move);
+        assertTrue(moves.size() < prevMoveSize);
+    }
+
+    @Test
+    public void testAIThinkLessOrEqualTo20Moves() {
+        List<Move> moves = generateListOfSizeWithMove(19, new Move(I3, 4, 6));
+        moves.add(new Move(I2, 4, 6));
+        ai = mockAIThinkUpToNMoves(moves);
+        int prevMoveSize = moves.size();
+        pieces.add(I3);
+        pieces.add(I2);
+        Move move = ai.think(color, 3);
+        assertNotNull(move);
+        assertEquals(moves.size(), prevMoveSize);
+    }
+
+    //  coverage for hasMove()
+/*
+    @Test
+    public void testAIHasMove_returnsBooleanTrue_emptyBoard_firstMove() {
+        color = 0;
+        assertNotNull(game);
+        List<Square> seeds = board.seeds();
+        assertNotNull(seeds);
+        boolean turnIsOver = game.boards.get(color).over;
+        assertFalse(turnIsOver);
+        ai
+        assertTrue(turnIsOver);
+        boolean aiHasMove = ai.hasMove(color);
+        assertTrue(aiHasMove);
+    }
+*/
 }

@@ -23,7 +23,7 @@ import android.util.Log;
 
 public class AI  {
 
-	public static final String tag = "sc";
+	public static final String tag = "sc"; // ECSE429: S. Coutant's initials???
 	private static final int SIZE_WEIGHT = 5;
 	private static final int CENTER_WEIGHT = 1;
 	private static final int SEEDS_WEIGHT = 3;
@@ -33,7 +33,7 @@ public class AI  {
 	private Random random = new Random();
 	
 	// array to store the max number of moves for level 1 to 4
-	private int[] maxMoves = { 40, 100, 250, 10000 };
+	private int[] maxMoves = { 40, 100, 250, 10000 }; // ECSE429: Search depth for AI per difficulty?
 
 	public int adaptedLevel = 3;
 
@@ -41,33 +41,33 @@ public class AI  {
 		this.game = game;
 	}
 
-	public boolean hasMove(int color) {
-		Board board = game.boards.get(color);
-		for (Square seed : board.seeds()) {
-			for (int p=0; p<board.pieces.size(); p++) {
-				Piece piece = board.pieces.get(p);
+	public boolean hasMove(int color) { // ECSE429: check if move possible for color/player?
+		Board board = game.boards.get(color); // ECSE429: current color playing?
+		for (Square seed : board.seeds()) { // ECSE429: List of squares that are seeds (ij[i][j]==1)
+			for (int p=0; p<board.pieces.size(); p++) { // ECSE429: number of pieces (List)
+				Piece piece = board.pieces.get(p); // ECSE429: get nth or ith or pth piece
 				// Fixing issue #3, changing order rotate/flip
-				for( int f=0; f<piece.flips; f++, piece.flip()) {
-					for (int r=0; r<piece.rotations; r++, piece.rotate(1)) {
+				for( int f=0; f<piece.flips; f++, piece.flip()) { // ECSE429: 2 (piece flips on its axis)
+					for (int r=0; r<piece.rotations; r++, piece.rotate(1)) { // ECSE429: 4 (rotate piece)
 						for (Square s : piece.squares()) {
 							int i = seed.i - s.i;
 							int j = seed.j - s.j;
 							if ( !board.outside(s, i, j) && game.fits(piece, i, j)) {
 								Log.d(tag, "possible move : " + new Move(piece, i, j));
-								game.boards.get(color).over = false;
-								return true;
+								game.boards.get(color).over = false; // ECSE429: mark end of turn of color/player
+								return true; // ECSE429: move found
 							}
 						}
 					}
 				}
 			}
 		}
-		game.boards.get(color).over = true;
-		return false;
+		game.boards.get(color).over = true; // ECSE429: mark end of turn
+		return false; // ECSE429: no moves found
 	}
 	
 	public Move think(int color, int level) {
-		if (game.boards.get(color).pieces.isEmpty()) {
+		if (game.boards.get(color).pieces.isEmpty()) { // ECSE429: no more pieces left, win, but keep playing for other colors/players
 			Log.d(tag, "no more pieces for player : " + color);
 			// no big deal, AI will continue for the other players. At the very end current player will be granted the winning message.
 			game.boards.get(color).over = true;
@@ -81,12 +81,12 @@ public class AI  {
 		List<Move> moves = thinkUpToNMoves(color, level);
 		Log.d(tag, "# moves : " + moves.size());
 		if (moves.size()==0) {
-			game.boards.get(color).over = true;
+			game.boards.get(color).over = true; // ECSE429: no moves, end turn
 			return null;
 		}
 		Collections.sort(moves);
-		Collections.reverse(moves);
-		Move move = moves.get( 0);
+		Collections.reverse(moves); // ECSE429: sort moves by best first
+		Move move = moves.get( 0); // ECSE429: get best move
 		Log.d(tag, "best move actually is : " + move);
 		// TODO may be many moves with O1 and I2. But only 1 or 2 nice moves!!
 		if (moves.size()>20) {
@@ -104,7 +104,7 @@ public class AI  {
 		move.piece.reset(move.ghost);
 		return move;
 	}
-	protected List<Move> thinkUpToNMoves(int color, int level) {
+	protected List<Move> thinkUpToNMoves(int color, int level) { // ECSE429: build search tree?
 		List<Move> moves = new ArrayList<Move>();
 		Board board = game.boards.get(color);
 		// Most of time , in the middle of the game, any player has about 10 to 20 seeds.
@@ -134,6 +134,7 @@ public class AI  {
 								if (!game.valid(move)) {
 									Log.e(tag, "Inconsistant ! "+move);
 								}
+								// ECSE429: scoring functions and heuristics with weights (so that's what they are for)?
 								int score = SIZE_WEIGHT * piece.count;
 								if (board.pieces.size()> board.nbPieces-5) {
 									// encourage moving to the center, this extra bonus only for pentaminos
@@ -170,13 +171,13 @@ public class AI  {
 		return moves;
 	}
 
-	private int[][] ij = new int [20][20];
+	private int[][] ij = new int [20][20]; // ECSE429: represents...board???
 	
 	/**
 	 * Considering we play given @param move. 
 	 * @return true if we may place a piece on newly created seeds.
 	 */
-	protected int chainingScore(int color, Move move) {
+	protected int chainingScore(int color, Move move) { // ECSE429: some AI move tree depth search back propagation something?
 		Board board = game.boards.get(color);
 		Piece played = move.piece;
 		List<Piece> pieces = new ArrayList<Piece>();
@@ -227,7 +228,7 @@ public class AI  {
 		return score;
 	}
 	
-	public boolean overlaps( int color, Piece piece, int i, int j) {
+	public boolean overlaps( int color, Piece piece, int i, int j) { // ECSE429: check if pieces overlap?
 		for(Square s : piece.squares()) {
 			int I = i+s.i;
 			int J = j+s.j;
@@ -237,7 +238,7 @@ public class AI  {
 	}
 
 	
-	private void autoAdaptLevel(long startedAt) {
+	private void autoAdaptLevel(long startedAt) { // ECSE429: AI gets easier with time
 		long duration = new Date().getTime()- startedAt;
 		Log.d(tag, "lasted : " + duration );
 		if (duration > 2500 && adaptedLevel>0) {
