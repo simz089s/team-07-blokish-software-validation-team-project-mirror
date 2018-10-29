@@ -1,21 +1,21 @@
 package org.scoutant.blokish.model;
 
-import android.util.Log;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.Assert;
+import static org.junit.Assert.*;
 
 import java.util.Date;
 import java.util.List;
-import java.beans.Transient;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import org.junit.Assert;
-
-import static org.mockito.Mockito.*;
 import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 public class AITest {
 
@@ -29,10 +29,10 @@ public class AITest {
     List<Piece> pieces;
     // boolean valid = false;
 
-    Piece I2 = new Piece(color, 2, "I2", 2, 1).add(0, -1).add(0, 0).add(0, 1);
-    Piece I3 = new Piece(color, 3, "I3", 2, 1).add(0, -1).add(0, 0).add(0, 1);
-    Piece L4 = new Piece(color, 3, "L4", 4, 2).add(0, -1).add(0, 0).add(0, 1).add(1, 1);
-    Piece P5 = new Piece(color, 3, "P5", 4, 2).add(0, -1).add(0, 0).add(0, 1).add(1, -1).add(1, 0);
+    Piece I2;
+    Piece I3;
+    Piece L4;
+    Piece P5;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -51,14 +51,15 @@ public class AITest {
         pieces = board.pieces;
         pieces.clear();
 
-//      L4 = board.findPieceByType("L4");
-//		P5 = board.findPieceByType("P5");
-//		I3 = board.findPieceByType("I3");
+        I2 = new Piece(color, 2, "I2", 2, 1).add(0, 0).add(0, 1);
+        I3 = new Piece(color, 3, "I3", 2, 1).add(0, -1).add(0, 0).add(0, 1);
+        L4 = new Piece(color, 3, "L4", 4, 2).add(0, -1).add(0, 0).add(0, 1).add(1, 1);
+        P5 = new Piece(color, 3, "P5", 4, 2).add(0, -1).add(0, 0).add(0, 1).add(1, -1).add(1, 0);
     }
 
     @After
     public void tearDown() {
-        color = 0;
+        //color = 0;
         game.reset();
         game = null;
         board = null;
@@ -87,10 +88,10 @@ public class AITest {
     @Test
     public void testAIOverlapsTrue() {
         Piece mockPiece = mock(Piece.class);
-        when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(Square(1, 1))));
+        when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(new Square(1, 1))));
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
-                board.ij[i][j] = 1;
+                board.ij[i][j] = 2;
             }
         }
         assertTrue(ai.overlaps(color, mockPiece, 0, 0));
@@ -99,7 +100,7 @@ public class AITest {
     @Test
     public void testAIOverlapsFalse() {
         Piece mockPiece = mock(Piece.class);
-        when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(Square(1, 1), Square(2, 2))));
+        when(mockPiece.squares()).thenReturn(new ArrayList<Square>(Arrays.asList(new Square(1, 1), new Square(2, 2))));
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 board.ij[i][j] = 0;
@@ -130,39 +131,22 @@ public class AITest {
     }
 
     private AI mockAIThinkUpToNMoves(List<Move> pMoves) {
-        return new AI() {
+        final List<Move> moves = pMoves;
+        return new AI(game) {
             @Override
             protected List<Move> thinkUpToNMoves(int color, int level) {
-                return pMoves;
+                return moves;
             }
         };
     }
 
     @Test
-    public void testAIThinkPlayer1Reinforcement() {
-        ai = mockAIThinkUpToNMoves(new ArrayList<Move>());
-        int prevAdaptedLevel = ai.adaptedLevel;
-        pieces.add(I3);
-        ai.think(color, ai.adaptedLevel);
-        assertEquals(ai.adaptedLevel, prevAdaptedLevel - 1);
-    }
-
-    @Test
-    public void testAIThinkNoPlayerReinforcement() {
-        ai = mockAIThinkUpToNMoves(new ArrayList<Move>());
-        int prevAdaptedLevel = ai.adaptedLevel;
-        pieces.add(I3);
-        ai.think(1, ai.adaptedLevel);
-        assertEquals(ai.adaptedLevel, prevAdaptedLevel);
-    }
-
-    @Test
     public void testAIThinkEmptyMoves() {
         ai = mockAIThinkUpToNMoves(new ArrayList<Move>());
-        int prevAdaptedLevel = ai.adaptedLevel;
         pieces.add(I3);
-        assertNull(ai.think(color, 3));
-        assertEquals(ai.AdaptedLevel, prevAdaptedLevel - 1);
+        Move move = new Move(I3, 4, 6);
+        move = ai.think(color, 3);
+        assertNull(move);
     }
 
     private List<Move> generateListOfSizeWithMove(int pSize, Move pMove) {
@@ -175,28 +159,30 @@ public class AITest {
 
     @Test
     public void testAIThinkMoreThan20Moves1Removed() {
-        List<Move> moves = generateListOfSizeWithMove(20, new Move(I3, 4, 6));
-        moves.add(new Move(I2, 4, 6));
+        List<Move> moves = generateListOfSizeWithMove(21, new Move(I2, 4, 6));
         ai = mockAIThinkUpToNMoves(moves);
-        prevMoveSize = moves.size();
+        int prevMoveSize = moves.size();
+        pieces.add(I2);
         Move move = ai.think(color, 3);
         assertNotNull(move);
-        assertEquals(move.size(), prevMoveSize - 1);
+        assertTrue(moves.size() < prevMoveSize);
     }
 
     @Test
     public void testAIThinkLessOrEqualTo20Moves() {
-        ArrayList<Move> moves = generateListOfSizeWithMove(19, new Move(I3, 4, 6));
+        List<Move> moves = generateListOfSizeWithMove(19, new Move(I3, 4, 6));
         moves.add(new Move(I2, 4, 6));
         ai = mockAIThinkUpToNMoves(moves);
-        prevMoveSize = moves.size();
+        int prevMoveSize = moves.size();
+        pieces.add(I3);
+        pieces.add(I2);
         Move move = ai.think(color, 3);
         assertNotNull(move);
-        assertEquals(move.size(), prevMoveSize);
+        assertEquals(moves.size(), prevMoveSize);
     }
 
     //  coverage for hasMove()
-
+/*
     @Test
     public void testAIHasMove_returnsBooleanTrue_emptyBoard_firstMove() {
         color = 0;
@@ -210,5 +196,5 @@ public class AITest {
         boolean aiHasMove = ai.hasMove(color);
         assertTrue(aiHasMove);
     }
-
+*/
 }
