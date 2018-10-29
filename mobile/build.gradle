@@ -17,8 +17,9 @@ android {
         implementation 'com.android.support:appcompat-v7:27.1.1'
         implementation 'com.android.support:support-v4:27.1.1'
         implementation 'com.android.support:design:27.1.1'
-//        implementation 'org.evosuite:evosuite-standalone-runtime:1.0.6'
-        implementation 'org.slf4j:slf4j-nop:1.7.25'
+//      implementation 'org.evosuite:evosuite-standalone-runtime:1.0.6'
+//      implementation 'org.slf4j:slf4j-nop:1.7.25'
+
         implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
         testImplementation "org.mockito:mockito-core:1.+"
 
@@ -39,6 +40,7 @@ android {
         release {
             minifyEnabled false
         }
+
         debug {
             testCoverageEnabled true
         }
@@ -61,6 +63,7 @@ pmd {
             "braces"
     ]
 }
+
 apply plugin: 'jacoco'
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
