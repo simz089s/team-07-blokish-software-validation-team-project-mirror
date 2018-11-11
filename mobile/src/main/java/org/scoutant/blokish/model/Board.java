@@ -116,7 +116,7 @@ public class Board {
 		}
 		
 		if (piece.color == this.color) {
-			pieces.remove( piece);
+			pieces.remove(piece);
 			score += piece.count;
 			for(Square seed : piece.seeds()) {
 				try { if (ij[i+seed.i][j+seed.j] ==0 ) ij[i+seed.i][j+seed.j] = 1; } catch (Exception e) {}   
