@@ -16,8 +16,9 @@ public class MoveIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        Piece piece_mock = new Piece(3, "L4", 4, 2).add(0,-1).add(0,0).add(0,1).add(1,1);
-        move = new Move(piece_mock, 1, 1);
+    public void setUp() throws Exception {
+        Piece myPiece = new Piece(3, "L4", 4, 2).add(0,-1).add(0,0).add(0,1).add(1,1);
+        move = new Move(myPiece, 1, 1);
     }
 
     // integration testing of Move with Piece (composition)

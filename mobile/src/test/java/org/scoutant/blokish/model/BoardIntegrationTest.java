@@ -38,11 +38,11 @@ public class BoardIntegrationTest {
     @Test
     public void testBoardPieceAssociation() {
 
-        Piece piece_mock1 = new Piece(3, "L4", 4, 2).add(0,-1).add(0,0).add(0,1).add(1,1);
+        Piece myPiece = new Piece(3, "L4", 4, 2).add(0,-1).add(0,0).add(0,1).add(1,1);
 
         // test association dependency
         int ij = board.ij[0][0];
-        board.add(piece_mock1, 0, 0); // insert Piece mock object
+        board.add(myPiece, 0, 0); // insert Piece stub object
         assertTrue(ij != board.ij[0][0]); // check the integration: if board value has changed
     }
 
@@ -51,12 +51,12 @@ public class BoardIntegrationTest {
     @Test
     public void testBoardPieceCompositionOnAddMethodInBoard() {
 
-        Piece piece_mock = new Piece(0, 3, "I3", 2, 1).add(0,-1).add(0,0).add(0,1);
+        Piece myPiece = new Piece(0, 3, "I3", 2, 1).add(0,-1).add(0,0).add(0,1);
 
         // test composition dependency
-        piece_mock.count = 1;
+        myPiece.count = 1;
         int length = board.pieces.size();
-        board.add(piece_mock, 0, 0);
+        board.add(myPiece, 0, 0);
         // integration test: check if Piece has been removed from board
         assertTrue(board.pieces.size() < length);
     }
@@ -66,7 +66,7 @@ public class BoardIntegrationTest {
     @Test
     public void testBoardSquareAssociationOnOutsideMethodInBoard() {
 
-        Square square_mock = new Square(0,0);
+        Square mySquare = new Square(0,0);
 
         JSONObject testJsonObject = (JSONObject) jsonObject.get("testOutside");
 
@@ -76,7 +76,7 @@ public class BoardIntegrationTest {
         for(int index = 0 ; index < inputs_i.size() ; index++){
             int i = Integer.parseInt(inputs_i.get(index).toString());
             int j = Integer.parseInt(inputs_j.get(index).toString());
-            assertTrue(board.outside(square_mock, i, j));
+            assertTrue(board.outside(mySquare, i, j));
         }
 
         // test false condition (each condition constituent evaluated to false at least once)
@@ -85,7 +85,7 @@ public class BoardIntegrationTest {
         for(int index = 0 ; index < inputs_i_false.size() ; index++){
             int i = Integer.parseInt(inputs_i_false.get(index).toString());
             int j = Integer.parseInt(inputs_j_false.get(index).toString());
-            assertFalse(board.outside(square_mock, i, j));
+            assertFalse(board.outside(mySquare, i, j));
         }
     }
 
