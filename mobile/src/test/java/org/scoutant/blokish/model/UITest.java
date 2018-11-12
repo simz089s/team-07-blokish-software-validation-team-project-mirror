@@ -42,7 +42,7 @@ public class UITest {
         verify(piece).flip();
     }
     @Test
-    public void testUI(){
+    public void testUIOnOptionsItemSelectedGameInvalidate(){
         UI ui = new UI();
         MenuItem item = mock(MenuItem.class);
         when(item.getItemId()).thenReturn(12);//MENU_ITEM_PASS_TURN
