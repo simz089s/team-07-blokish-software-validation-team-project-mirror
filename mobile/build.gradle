@@ -2,8 +2,13 @@ apply plugin: 'com.android.application'
 
 repositories { jcenter() }
 android {
-    compileSdkVersion 27 // Api 8.1
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28 // Api 8.1
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 28
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildToolsVersion "28.0.3"
     project.archivesBaseName = "blokish-3.3" // TODO sync with Manifest
 
     compileOptions {
@@ -14,15 +19,38 @@ android {
     dependencies {
         testImplementation 'junit:junit:4.12'
 
-        implementation 'com.android.support:appcompat-v7:27.1.1'
-        implementation 'com.android.support:support-v4:27.1.1'
-        implementation 'com.android.support:design:27.1.1'
+        implementation 'com.android.support:appcompat-v7:28.0.0'
+        implementation 'com.android.support:support-v4:28.0.0'
+        implementation 'com.android.support:design:28.0.0'
 //      implementation 'org.evosuite:evosuite-standalone-runtime:1.0.6'
 //      implementation 'org.slf4j:slf4j-nop:1.7.25'
 
         implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-        testImplementation "org.mockito:mockito-core:1.+"
+        testImplementation "org.mockito:mockito-core:2.23.0"
+        testImplementation 'org.robolectric:robolectric:4.0'
+        // Core library
+        androidTestImplementation 'androidx.test:core:1.0.0'
+        // AndroidJUnitRunner and JUnit Rules
+        androidTestImplementation 'androidx.test:runner:1.1.0'
+        androidTestImplementation 'androidx.test:rules:1.1.0'
+        // Assertions
+        androidTestImplementation 'androidx.test.ext:junit:1.0.0'
+        androidTestImplementation 'androidx.test.ext:truth:1.0.0'
+        androidTestImplementation 'com.google.truth:truth:0.42'
+        // Espresso dependencies
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.0'
+        // Add these for applications having significant library dependencies
+        androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
+        // Android-specific Mockito
+        androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2:'
     }
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 //    sourceSets {
 //        test {
 //            java {
@@ -47,6 +75,9 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
 }

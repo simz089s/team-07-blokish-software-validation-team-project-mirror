@@ -165,6 +165,12 @@ public class PieceUI extends FrameLayout implements OnTouchListener, OnLongClick
   }
 
 
+  /* size getter to ease testing of GameView swipePieces */
+  public int getSize() {
+    return size;
+  }
+
+
   public PieceUI( Context context, Piece piece, int i, int j){
     this(context, piece);
     i0=i;
@@ -300,8 +306,8 @@ public class PieceUI extends FrameLayout implements OnTouchListener, OnLongClick
   public boolean onLongClick(View v) {
     if (!movable) return false;
     GameView game = (GameView) v.getParent();
-    if (game.selected == null) {
-      game.selected = this;
+    if (game.getSelected() == null) {
+      game.setSelected(this);
       return true;
     } else {
       if (!moving && !rotating) flip();

@@ -124,7 +124,7 @@ public class UI extends AppCompatActivity implements NavigationView.OnNavigation
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		if (game.selected!=null) {
+		if (game.getSelected()!=null) {
 			menu.add(Menu.NONE, MENU_ITEM_FLIP, Menu.NONE, R.string.flip).setIcon(android.R.drawable.ic_menu_set_as);
 		}
 		menu.add(Menu.NONE, MENU_ITEM_BACK, Menu.NONE, R.string.undo).setIcon( R.drawable.left_48);
@@ -206,7 +206,7 @@ public class UI extends AppCompatActivity implements NavigationView.OnNavigation
 				game.invalidate();
 		}
 		if (item.getItemId() == MENU_ITEM_FLIP) {
-			PieceUI piece = game.selected;
+			PieceUI piece = game.getSelected();
 			if (piece!=null) piece.flip();
 		}
 		return false;

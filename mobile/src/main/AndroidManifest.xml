@@ -33,6 +33,12 @@
 		    android:screenOrientation="portrait" 
 		    android:parentActivityName=".UI"
 		    />
+		<uses-library android:name="android.test.base"
+					  android:required="false" />
+		<uses-library android:name="android.test.runner"
+					  android:required="false" />
+		<uses-library android:name="android.test.mock"
+					  android:required="false" />
 	</application>
 </manifest>
 <!-- TODO issue #4 : when same score : last player wins : adapt the message. -->
