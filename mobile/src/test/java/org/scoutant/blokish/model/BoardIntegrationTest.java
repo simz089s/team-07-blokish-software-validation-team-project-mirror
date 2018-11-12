@@ -36,7 +36,7 @@ public class BoardIntegrationTest {
     // integration testing of Board with Piece (association dependency behaviour)
     // test: add( Piece piece, int i, int j) method
     @Test
-    public void testBoardPieceAssociation() {
+    public void testBoardPieceAssociationOnAddMethodInBoard() {
 
         Piece myPiece = new Piece(3, "L4", 4, 2).add(0,-1).add(0,0).add(0,1).add(1,1);
 
