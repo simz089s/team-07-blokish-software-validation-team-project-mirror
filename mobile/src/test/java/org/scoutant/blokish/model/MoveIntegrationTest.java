@@ -23,7 +23,7 @@ public class MoveIntegrationTest {
     // integration testing of Move with Piece (composition)
     // test: serialize(Move move) method
     @Test
-    public void testMovePieceCompositionOnserializeMethodInMovex() {
+    public void testMovePieceCompositionOnSerializeMethodInMove() {
         String serializedStr = "";
         serializedStr = Move.serialize(move);
         // integration test: check if Move outputted a serialized string using Piece
