@@ -82,7 +82,7 @@ public class GameView extends FrameLayout {
 		super(context);
 		rs = context.getResources();
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		ui = (UI) context;
+//		ui = (UI) context; // Never actually used
 		setWillNotDraw(false);
 		setLayoutParams( new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, Gravity.TOP));
 		paint.setStrokeWidth(1.3f);
@@ -157,8 +157,15 @@ public class GameView extends FrameLayout {
 		return ContextCompat.getDrawable( getContext(), id);
 	}
 
+	/* Getter+setter in order to allow mocking of GameView from PieceUI */
+	public PieceUI getSelected() {
+		return selected;
+	}
+	public void setSelected(PieceUI pSelected) {
+		selected = pSelected;
+	}
 
-		private class ShowPiecesListener implements OnClickListener {
+	private class ShowPiecesListener implements OnClickListener {
 		private int color;
 		protected ShowPiecesListener(int color) {
 			this.color = color;
