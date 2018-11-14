@@ -17,6 +17,9 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
+before_install:
+  - yes | sdkmanager "platforms;android-28"
+
 script:
   - ./gradlew test
   - ./gradlew jacocoTestReport
