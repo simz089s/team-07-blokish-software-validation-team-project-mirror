@@ -195,7 +195,7 @@ class BoardStub {
 		return false;
 	}
 	
-	public Piece findPieceByType(String t) {
+	public PieceStub findPieceByType(String t) {
 		if (pieces.size() > 0)
 			return pieces.get(0);
 		return new PieceStub();
@@ -271,7 +271,7 @@ class MoveStub {
 		j = J;
 	}
 	
-	public static String serialize(Move m) {
+	public static String serialize(MoveStub m) {
 		return "serialized";
 	}
 }
