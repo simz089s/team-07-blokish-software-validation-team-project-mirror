@@ -8,12 +8,12 @@ import org.junit.Test;
 
 public class TierOneIntegrationTesting {
 	
-	Game game;
+	GameStub game;
 	TierOneStubsDrivers elements;
 	
 	@Before
 	public void setUp() {
-		game = new Game();
+		game = new GameStub();
 	}	
 	
 	@Test
@@ -24,7 +24,7 @@ public class TierOneIntegrationTesting {
 		assertFalse(game.over());
 		
 		// Testing one arbitrary method of the Game class
-		game.historize(new Move(new Piece(), 1, 2));
+		game.historize(new MoveStub(new PieceStub(), 1, 2));
 		assertEquals(game.moves.size(), 1);
 		assertEquals(game.moves.get(0).j, 2);
 	}
