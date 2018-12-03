@@ -4,6 +4,8 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.robotium.solo.Solo;
 
+import static org.junit.Assert.assertNotEquals;
+
 public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 
     private Solo solo;
@@ -107,5 +109,33 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 
         assertEquals("10", myUi.game.tabs[0].getText().toString());
     }
+
+    // scenario 7
+    public void testDragBlockCornerRuleFirstMoveSuccess() throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        newGame(); // Restart game
+
+        String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
+
+        solo.drag(141, 11, 1340, 330, 20); // Drag piece to corner
+        solo.clickLongOnScreen(730,1443); // Try to click Accept (should accept)
+
+        assertNotEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should have changed to 5
+        assertEquals("5", myUi.game.tabs[0].getText().toString());
+    }
+
+    // scenario 8
+    public void testDragBlockCornerRuleFirstMoveFail() throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        newGame(); // Restart game
+
+        String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
+
+        solo.drag(148, 37, 1346, 300, 20); // Drag piece to center
+        solo.clickLongOnScreen(730,1443); // Try to click Accept (nothing should happen)
+
+        assertEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should not have changed
+    }
+
 }
 
