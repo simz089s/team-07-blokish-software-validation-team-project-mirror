@@ -24,7 +24,9 @@ env:
     
 # Emulator Management: Create, Start and Wait
 before_script:
+  - android list sdk --all --extended
   - echo y | android update sdk --all --no-ui --filter "sys-img-armeabi-v7a-google_apis-28"
+  - android list targets
   - echo "no" | android -v create avd --force -n arm -t "android-28" --abi "google_apis/armeabi-v7a"
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
