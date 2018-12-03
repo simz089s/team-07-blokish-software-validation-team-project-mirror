@@ -49,62 +49,50 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
         solo.clickLongOnScreen(660f, 1100f);
     }
 
-    public void testCancelBlockPlacement() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-        solo.drag(148, 37, 1346, 300, 20);
-        PieceUI myPiece = myUi.game.findPiece(0,"I5");
-        solo.clickLongOnScreen(296,1422, 1);
-        assertEquals(myPiece.i0, myPiece.i );
-        assertEquals(myPiece.j0, myPiece.j);
-    }
-
-    public void testAcceptBlockPlacement() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-        solo.drag(141, 11, 1340, 330, 25);
-        solo.clickLongOnScreen(730,1443);
-        PieceUI myPiece = myUi.game.findPiece(0,"I5");
-        assertEquals(0, myPiece.i);
-        assertEquals(2, myPiece.j);
-    }
-
-    // scenario 3
-    public void testUpdateScoreEndGameNoBonus() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-
-        String total = "";
-        UI myUi = getActivity();
-        int i = 0;
-        while (!myUi.game.game.over()) {
-            for (int j = 0; j < 4; j++) {
-                if (!myUi.game.game.over()) {
-                    myUi.think(j);
-                } else {
-                    total = myUi.game.tabs[0].getText().toString();
-                    break;
-                }
-
-            }
-        }
-        assertTrue(solo.searchText(total));
-    }
-
-
-
-    // scenario 6
-    public void testUpdateScoreDuringGame() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-
-        solo.drag(148f, 37f, 1346f, 300f, 25);
-        solo.clickLongOnScreen(750f, 1475f);
-        solo.drag(195f, 58f, 1576f, 570f, 25);
-        solo.clickLongOnScreen(750f, 1475f);
-
-        assertEquals("10", myUi.game.tabs[0].getText().toString());
-    }
+//    public void testNewGame(){
+//        solo.waitForActivity("UI", 2000);
+//        newGame();
+//        solo.drag(141, 11, 1340, 330, 25);
+//        solo.clickLongOnScreen(730,1443);
+//        solo.drag(0f, 700f, 1346f, 1346f, 15);
+//        solo.sleep(1000);
+//        solo.clickLongOnScreen(300f, 800f);
+//        solo.clickLongOnScreen(660f, 1100f);
+//        assertTrue(solo.searchText("0", 4));
+//    }
+//
+//    public void testCancelBlockPlacement() throws InterruptedException {
+//        solo.waitForActivity("UI", 2000);
+//        newGame();
+//        solo.drag(148, 37, 1346, 300, 20);
+//        PieceUI myPiece = myUi.game.findPiece(0,"I5");
+//        solo.clickLongOnScreen(296,1422, 1);
+//        assertEquals(myPiece.i0, myPiece.i );
+//        assertEquals(myPiece.j0, myPiece.j);
+//    }
+//
+//    public void testAcceptBlockPlacement() throws InterruptedException {
+//        solo.waitForActivity("UI", 2000);
+//        newGame();
+//        solo.drag(141, 11, 1340, 330, 25);
+//        solo.clickLongOnScreen(730,1443);
+//        PieceUI myPiece = myUi.game.findPiece(0,"I5");
+//        assertEquals(0, myPiece.i);
+//        assertEquals(2, myPiece.j);
+//    }
+//
+//    // scenario 6
+//    public void testUpdateScoreDuringGame() throws InterruptedException {
+//        solo.waitForActivity("UI", 2000);
+//        newGame();
+//
+//        solo.drag(148f, 37f, 1346f, 300f, 25);
+//        solo.clickLongOnScreen(750f, 1475f);
+//        solo.drag(195f, 58f, 1576f, 570f, 25);
+//        solo.clickLongOnScreen(750f, 1475f);
+//
+//        assertEquals("10", myUi.game.tabs[0].getText().toString());
+//    }
 
     // scenario 7
     public void testDragBlockCornerRuleFirstMoveSuccess() throws InterruptedException {
@@ -127,10 +115,32 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 
         String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
 
-        solo.drag(148, 37, 1346, 300, 20); // Drag piece to center
+        solo.drag(148, 100, 1346, 300, 20); // Drag piece to center
         solo.clickLongOnScreen(730,1443); // Try to click Accept (nothing should happen)
 
         assertEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should not have changed
+    }
+
+    // scenario 3
+    public void testUpdateScoreEndGameNoBonus() throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        newGame();
+
+        String total = "";
+        UI myUi = getActivity();
+        int i = 0;
+        while (!myUi.game.game.over()) {
+            for (int j = 0; j < 4; j++) {
+                if (!myUi.game.game.over()) {
+                    myUi.think(j);
+                } else {
+                    total = myUi.game.tabs[0].getText().toString();
+                    break;
+                }
+
+            }
+        }
+        assertTrue(solo.searchText(total));
     }
 
 }
