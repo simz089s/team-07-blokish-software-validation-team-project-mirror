@@ -1,6 +1,7 @@
 package org.scoutant.blokish;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ImageButton;
 
 import com.robotium.solo.Solo;
 
@@ -141,6 +142,39 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
             }
         }
         assertTrue(solo.searchText(total));
+    }
+
+    // scenario 9
+    public void testBlockPlacementCornerRuleSatisfiedWithAnotherBlock() throws InterruptedException{
+        solo.waitForActivity("UI", 2000);
+        newGame();
+        solo.drag(120, 10, 1150, 270, 10);
+        ImageButton okButton = (ImageButton) solo.getView(R.id.ok);
+        solo.clickOnView(okButton);
+        solo.drag(120, 60, 1450, 475, 10);
+        assertEquals(true, okButton.isEnabled());
+    }
+
+    // scenario 10
+    public void testBlockPlacementCornerRuleViolatedEdgeTouching() throws InterruptedException{
+        solo.waitForActivity("UI", 2000);
+        newGame();
+        solo.drag(120, 10, 1150, 270, 10);
+        ImageButton okButton = (ImageButton) solo.getView(R.id.ok);
+        solo.clickOnView(okButton);
+        solo.drag(470, 120, 1150, 410, 10);
+        assertEquals(false, okButton.isEnabled());
+    }
+
+    // scenario 11
+    public void testBlockPlacementCornerRuleViolatedCornerNotTouching()throws InterruptedException{
+        solo.waitForActivity("UI", 2000);
+        newGame();
+        solo.drag(120, 10, 1150, 270, 10);
+        ImageButton okButton = (ImageButton) solo.getView(R.id.ok);
+        solo.clickOnView(okButton);
+        solo.drag(470, 500, 1150, 500, 10);
+        assertEquals(false, okButton.isEnabled());
     }
 
 }
