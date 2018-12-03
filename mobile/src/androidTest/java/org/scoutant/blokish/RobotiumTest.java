@@ -92,77 +92,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 //        solo.clickLongOnScreen(490f, 1200f);
 
 //    }
-    
-    
-        // scenario 4
-    public void testUpdateScoreEndGameBonusSingleSquare(Board board) throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        //newGame();
-
-        UI myUi = getActivity();
-        int i = 0;
-        while (!myUi.game.game.over()) {
-            for (int j = 0; j < 4; j++) {
-                if (!myUi.game.game.over()) {
-                    myUi.think(j);
-                } else {
-                	Game currentGame = myUi.game.game;
-                	int numberOfMoves = currentGame.moves.size() - 1;
-                    for (int k = numberOfMoves; k > numberOfMoves - 4; k--) {
-                    	if (currentGame.moves.get(k).piece.size == 1) {
-                    		if (board.color == currentGame.moves.get(k).piece.color) {
-                    			board.score += 5;
-                    		}
-                    	}
-                    }
-                }
-
-            }
-        }
-        solo.sleep(5000);
-        assertTrue(true);
-//        solo.sleep(1000);
-//        solo.clickLongOnScreen(500f, 1100f);
-//        solo.sleep(800);
-//        solo.clickLongOnScreen(490f, 1200f);
-
-    }
-    
-    
-    // scenario 5
-    public void testUpdateScoreEndGameBonusAllSquares(Board board) throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        //newGame();
-
-        UI myUi = getActivity();
-        int i = 0;
-        while (!myUi.game.game.over()) {
-            for (int j = 0; j < 4; j++) {
-                if (!myUi.game.game.over()) {
-                    myUi.think(j);
-                } else {
-                	Game currentGame = myUi.game.game;
-                    int pieceCounter = 0;
-                    for (Move move : currentGame.moves) {
-                    	if (move.piece.color == Board.color) {
-                    		pieceCounter++;
-                    	}
-                    }
-                    if (pieceCounter == 21) {
-                    	board.score += 15;
-                    }
-                }
-
-            }
-        }
-        solo.sleep(5000);
-        assertTrue(true);
-//        solo.sleep(1000);
-//        solo.clickLongOnScreen(500f, 1100f);
-//        solo.sleep(800);
-//        solo.clickLongOnScreen(490f, 1200f);
-
-    }
 
 
 
@@ -176,17 +105,17 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
         solo.drag(195f, 58f, 1576f, 570f, 15);
         solo.clickLongOnScreen(750f, 1475f);
 
-        assertTrue(myUi.game.tabs[0].getText().toString().equals("10"));
+        assertEquals("10", myUi.game.tabs[0].getText().toString());
     }
 
     // scenario 7
-    /*public void testDragBlockCornerRuleFirstMove() throws InterruptedException {
+    public void testDragBlockCornerRuleFirstMove() throws InterruptedException {
         solo.waitForActivity("UI", 2000);
         newGame();
         solo.drag(148f, 37f, 1346f, 320f, 15);
         solo.clickLongOnScreen(750f, 1475f);
 
-        assertTrue(solo.searchText("5",4));
+        assertEquals("5", myUi.game.tabs[0].getText().toString());
     }
 
     // scenario 8
@@ -199,6 +128,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
         boolean isFirstMoveValid = solo.waitForText("5", 1, 500);
 
         assertFalse(isFirstMoveValid);
-    }*/
+    }
 }
 
