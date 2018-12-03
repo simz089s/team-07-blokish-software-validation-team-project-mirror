@@ -82,6 +82,86 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 //        assertEquals(0, myPiece.i);
 //        assertEquals(2, myPiece.j);
 //    }
+    
+         // scenario 4
+    public void testUpdateScoreEndGameBonusSingleSquare() throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        //newGame();
+
+        UI myUi = getActivity();
+        int i = 0;
+        int currentScore = 0;
+        Board userBoard;
+        while (!myUi.game.game.over()) {
+            for (int j = 0; j < 4; j++) {
+                if (!myUi.game.game.over()) {
+                    myUi.think(j);
+                } else {
+                	Game currentGame = myUi.game.game;
+                    userBoard = currentGame.boards.get(0);
+                    currentScore = userBoard.score;
+                	int numberOfMoves = currentGame.moves.size() - 1;
+                    for (int k = numberOfMoves; k > numberOfMoves - 4; k--) {
+                    	if (currentGame.moves.get(k).piece.size == 1) {
+                    		if (userBoard.color == currentGame.moves.get(k).piece.color) {
+                    			userBoard.score += 5;
+                    		}
+                    	}
+                    }
+                }
+
+            }
+        }
+        solo.sleep(5000);
+        assertEquals(userBoard.score, currentScore + 5);
+//        solo.sleep(1000);
+//        solo.clickLongOnScreen(500f, 1100f);
+//        solo.sleep(800);
+//        solo.clickLongOnScreen(490f, 1200f);
+
+    }
+    
+    
+    // scenario 5
+    public void testUpdateScoreEndGameBonusAllSquares() throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        //newGame();
+
+        UI myUi = getActivity();
+        int i = 0;
+        int currentScore = 0;
+        Board userBoard;
+        while (!myUi.game.game.over()) {
+            for (int j = 0; j < 4; j++) {
+                if (!myUi.game.game.over()) {
+                    myUi.think(j);
+                } else {
+                	Game currentGame = myUi.game.game;
+                    userBoard = currentGame.boards.get(0);
+                    currentScore = userBoard.score;
+                    int pieceCounter = 0;
+                    for (Move move : currentGame.moves) {
+                    	if (move.piece.color == userBoard.color) {
+                    		pieceCounter++;
+                    	}
+                    }
+                    if (pieceCounter == 21) {
+                    	userBoard.score += 15;
+                    }
+                }
+
+            }
+        }
+        solo.sleep(5000);
+        assertEquals(userBoard.score, currentScore + 15);
+//        solo.sleep(1000);
+//        solo.clickLongOnScreen(500f, 1100f);
+//        solo.sleep(800);
+//        solo.clickLongOnScreen(490f, 1200f);
+
+}
+    
+    
 //
 //    // scenario 6
 //    public void testUpdateScoreDuringGame() throws InterruptedException {
