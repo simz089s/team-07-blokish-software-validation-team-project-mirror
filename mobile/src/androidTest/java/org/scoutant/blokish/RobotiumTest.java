@@ -70,30 +70,26 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
     }
 
     // scenario 3
-//    public void testUpdateScoreEndGameNoBonus() throws InterruptedException {
-//        solo.waitForActivity("UI", 2000);
-//        //newGame();
-//
-//        UI myUi = getActivity();
-//        int i = 0;
-//        while (!myUi.game.game.over()) {
-//            for (int j = 0; j < 4; j++) {
-//                if (!myUi.game.game.over()) {
-//                    myUi.think(j);
-//                } else {
-//                    break;
-//                }
-//
-//            }
-//        }
-//        solo.sleep(5000);
-//        assertTrue(true);
-//        solo.sleep(1000);
-//        solo.clickLongOnScreen(500f, 1100f);
-//        solo.sleep(800);
-//        solo.clickLongOnScreen(490f, 1200f);
+    public void testUpdateScoreEndGameNoBonus() throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        newGame();
 
-//    }
+        String total = "";
+        UI myUi = getActivity();
+        int i = 0;
+        while (!myUi.game.game.over()) {
+            for (int j = 0; j < 4; j++) {
+                if (!myUi.game.game.over()) {
+                    myUi.think(j);
+                } else {
+                    total = myUi.game.tabs[0].getText().toString();
+                    break;
+                }
+
+            }
+        }
+        assertTrue(solo.searchText(total));
+    }
 
 
 
