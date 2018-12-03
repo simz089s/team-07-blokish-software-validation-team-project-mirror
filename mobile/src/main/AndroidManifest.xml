@@ -39,7 +39,7 @@
     android:required="false" />
 <uses-library android:name="android.test.mock"
     android:required="false" />
-
 	</application>
+
 </manifest>
 <!-- TODO issue #4 : when same score : last player wins : adapt the message. -->
