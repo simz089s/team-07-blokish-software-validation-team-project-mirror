@@ -26,7 +26,7 @@ env:
     
 # Emulator Management: Create, Start and Wait
 before_script:
-  - echo no | android create avd -n Nexus5_API28 -k "system-images;android-28;google_apis;x86" --tag "google_apis"
+  - android create avd -n Nexus5_API28 -k "system-images;android-28;google_apis;x86" --tag "google_apis"
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
