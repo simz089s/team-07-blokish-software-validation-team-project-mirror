@@ -52,18 +52,19 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
         newGame();
         solo.drag(148, 37, 1346, 300, 20);
         PieceUI myPiece = myUi.game.findPiece(0,"I5");
-        int x = myPiece.i0;
-        int y = myPiece.j0;
         solo.clickLongOnScreen(296,1422, 1);
-        assertTrue(myPiece.i == x && myPiece.j == y);
+        assertEquals(myPiece.i0, myPiece.i );
+        assertEquals(myPiece.j0, myPiece.j);
     }
 
     public void testAcceptBlockPlacement() throws InterruptedException {
         solo.waitForActivity("UI", 2000);
         newGame();
-        solo.drag(141, 11, 1340, 330, 20);
+        solo.drag(141, 11, 1340, 330, 25);
         solo.clickLongOnScreen(730,1443);
-        assertTrue(solo.searchText("5"));
+        PieceUI myPiece = myUi.game.findPiece(0,"I5");
+        assertEquals(0, myPiece.i);
+        assertEquals(2, myPiece.j);
     }
 
     // scenario 3
