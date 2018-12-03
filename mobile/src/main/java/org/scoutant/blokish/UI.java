@@ -359,7 +359,7 @@ public class UI extends AppCompatActivity implements NavigationView.OnNavigation
 				message += " " + rs.getString( R.string.wins_with_score) + " : ";
 				message += score;
 			}
-			new EndGameDialog(UI.this, redWins, message, findRequestedLevel()+1, score).show();
+			// new EndGameDialog(UI.this, redWins, message, findRequestedLevel()+1, score).show();
 		}
 	}
 	
