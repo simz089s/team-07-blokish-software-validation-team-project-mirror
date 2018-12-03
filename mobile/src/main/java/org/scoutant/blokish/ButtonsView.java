@@ -42,6 +42,9 @@ public class ButtonsView extends FrameLayout {
 
 	private int width;
 
+	public ImageButton getCancelButton() {
+		return cancel;
+	}
 	public ButtonsView(Context context) {
 		super(context);
 		this.context = context;
