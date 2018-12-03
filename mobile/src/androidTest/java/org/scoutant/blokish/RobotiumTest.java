@@ -92,6 +92,77 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 //        solo.clickLongOnScreen(490f, 1200f);
 
 //    }
+    
+    
+        // scenario 4
+    public void testUpdateScoreEndGameBonusSingleSquare(Board board) throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        //newGame();
+
+        UI myUi = getActivity();
+        int i = 0;
+        while (!myUi.game.game.over()) {
+            for (int j = 0; j < 4; j++) {
+                if (!myUi.game.game.over()) {
+                    myUi.think(j);
+                } else {
+                	Game currentGame = myUi.game.game;
+                	int numberOfMoves = currentGame.moves.size() - 1;
+                    for (int k = numberOfMoves; k > numberOfMoves - 4; k--) {
+                    	if (currentGame.moves.get(k).piece.size == 1) {
+                    		if (board.color == currentGame.moves.get(k).piece.color) {
+                    			board.score += 5;
+                    		}
+                    	}
+                    }
+                }
+
+            }
+        }
+        solo.sleep(5000);
+        assertTrue(true);
+//        solo.sleep(1000);
+//        solo.clickLongOnScreen(500f, 1100f);
+//        solo.sleep(800);
+//        solo.clickLongOnScreen(490f, 1200f);
+
+    }
+    
+    
+    // scenario 5
+    public void testUpdateScoreEndGameBonusAllSquares(Board board) throws InterruptedException {
+        solo.waitForActivity("UI", 2000);
+        //newGame();
+
+        UI myUi = getActivity();
+        int i = 0;
+        while (!myUi.game.game.over()) {
+            for (int j = 0; j < 4; j++) {
+                if (!myUi.game.game.over()) {
+                    myUi.think(j);
+                } else {
+                	Game currentGame = myUi.game.game;
+                    int pieceCounter = 0;
+                    for (Move move : currentGame.moves) {
+                    	if (move.piece.color == Board.color) {
+                    		pieceCounter++;
+                    	}
+                    }
+                    if (pieceCounter == 21) {
+                    	board.score += 15;
+                    }
+                }
+
+            }
+        }
+        solo.sleep(5000);
+        assertTrue(true);
+//        solo.sleep(1000);
+//        solo.clickLongOnScreen(500f, 1100f);
+//        solo.sleep(800);
+//        solo.clickLongOnScreen(490f, 1200f);
+
+    }
 
 
 
