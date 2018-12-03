@@ -100,34 +100,12 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
         solo.waitForActivity("UI", 2000);
         newGame();
 
-        solo.drag(148f, 37f, 1346f, 300f, 15);
+        solo.drag(148f, 37f, 1346f, 300f, 25);
         solo.clickLongOnScreen(750f, 1475f);
-        solo.drag(195f, 58f, 1576f, 570f, 15);
+        solo.drag(195f, 58f, 1576f, 570f, 25);
         solo.clickLongOnScreen(750f, 1475f);
 
         assertEquals("10", myUi.game.tabs[0].getText().toString());
-    }
-
-    // scenario 7
-    public void testDragBlockCornerRuleFirstMove() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-        solo.drag(148f, 37f, 1346f, 320f, 15);
-        solo.clickLongOnScreen(750f, 1475f);
-
-        assertEquals("5", myUi.game.tabs[0].getText().toString());
-    }
-
-    // scenario 8
-    public void testDragBlockCornerRuleFirstMoveFail() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-
-        solo.drag(148f, 60f, 1346f, 300f, 15);
-        solo.clickLongOnScreen(750f, 1475f);
-        boolean isFirstMoveValid = solo.waitForText("5", 1, 500);
-
-        assertFalse(isFirstMoveValid);
     }
 }
 
