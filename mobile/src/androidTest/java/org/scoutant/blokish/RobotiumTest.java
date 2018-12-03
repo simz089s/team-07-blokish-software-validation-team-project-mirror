@@ -11,7 +11,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 
     private Solo solo;
     private UI myUi;
-
+    private ImageButton okButton;
     private static final String LAUNCHER_ACTIVITY_FULL_CLASSNAME = "org.scoutant.blokish.UI";
 
     private static Class<?> launcherActivityClass;
@@ -35,6 +35,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
         super.setUp();
         solo = new Solo(getInstrumentation());
         myUi = getActivity();
+        okButton = myUi.game.buttons.ok;
     }
 
     @Override
@@ -96,62 +97,64 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
 //    }
 
     // scenario 7
-    public void testDragBlockCornerRuleFirstMoveSuccess() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame(); // Restart game
+//    public void testDragBlockCornerRuleFirstMoveSuccess() throws InterruptedException {
+//        solo.waitForActivity("UI", 2000);
+//        newGame(); // Restart game
+//
+//        String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
+//
+//        solo.drag(141, 11, 1340, 330, 20); // Drag piece to corner
+//        solo.clickLongOnScreen(730,1443); // Try to click Accept (should accept)
+//
+//        assertNotEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should have changed to 5
+//        assertEquals("5", myUi.game.tabs[0].getText().toString());
+//    }
 
-        String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
-
-        solo.drag(141, 11, 1340, 330, 20); // Drag piece to corner
-        solo.clickLongOnScreen(730,1443); // Try to click Accept (should accept)
-
-        assertNotEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should have changed to 5
-        assertEquals("5", myUi.game.tabs[0].getText().toString());
-    }
-
-    // scenario 8
-    public void testDragBlockCornerRuleFirstMoveFail() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame(); // Restart game
-
-        String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
-
-        solo.drag(148, 100, 1346, 300, 20); // Drag piece to center
-        solo.clickLongOnScreen(730,1443); // Try to click Accept (nothing should happen)
-
-        assertEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should not have changed
-    }
+//    // scenario 8
+//    public void testDragBlockCornerRuleFirstMoveFail() throws InterruptedException {
+//        solo.waitForActivity("UI", 2000);
+//        newGame(); // Restart game
+//
+//        String originalScore = myUi.game.tabs[0].getText().toString(); //  Remember original score
+//
+//        solo.drag(148, 100, 1346, 300, 20); // Drag piece to center
+//        solo.clickLongOnScreen(730,1443); // Try to click Accept (nothing should happen)
+//
+//        assertEquals(originalScore, myUi.game.tabs[0].getText().toString()); // Score should not have changed
+//    }
 
     // scenario 3
-    public void testUpdateScoreEndGameNoBonus() throws InterruptedException {
-        solo.waitForActivity("UI", 2000);
-        newGame();
-
-        String total = "";
-        UI myUi = getActivity();
-        int i = 0;
-        while (!myUi.game.game.over()) {
-            for (int j = 0; j < 4; j++) {
-                if (!myUi.game.game.over()) {
-                    myUi.think(j);
-                } else {
-                    total = myUi.game.tabs[0].getText().toString();
-                    break;
-                }
-
-            }
-        }
-        assertTrue(solo.searchText(total));
-    }
+//    public void testUpdateScoreEndGameNoBonus() throws InterruptedException {
+//        solo.waitForActivity("UI", 2000);
+//        newGame();
+//
+//        String total = "";
+//        UI myUi = getActivity();
+//        int count = 0;
+//        while (!myUi.game.game.over()) {
+//            for (int j = 0; j < 4; j++) {
+//                if (!myUi.game.game.over()) {
+//                    myUi.think(j);
+//                    solo.sleep(100);
+//                    count += 5;
+//                } else {
+//                    total = myUi.game.tabs[0].getText().toString();
+//                    break;
+//                }
+//
+//            }
+//        }
+//        assertTrue(solo.searchText(total));
+//    }
 
     // scenario 9
     public void testBlockPlacementCornerRuleSatisfiedWithAnotherBlock() throws InterruptedException{
         solo.waitForActivity("UI", 2000);
         newGame();
-        solo.drag(120, 10, 1150, 270, 10);
-        ImageButton okButton = (ImageButton) solo.getView(R.id.ok);
+        solo.drag(141, 11, 1340, 330, 25);
+        ImageButton okButton =  myUi.game.buttons.ok;
         solo.clickOnView(okButton);
-        solo.drag(120, 60, 1450, 475, 10);
+        solo.drag(195f, 58f, 1576f, 570f, 25);
         assertEquals(true, okButton.isEnabled());
     }
 
@@ -159,10 +162,10 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
     public void testBlockPlacementCornerRuleViolatedEdgeTouching() throws InterruptedException{
         solo.waitForActivity("UI", 2000);
         newGame();
-        solo.drag(120, 10, 1150, 270, 10);
-        ImageButton okButton = (ImageButton) solo.getView(R.id.ok);
+        solo.drag(141, 11, 1340, 330, 25);
+        ImageButton okButton =  myUi.game.buttons.ok;
         solo.clickOnView(okButton);
-        solo.drag(470, 120, 1150, 410, 10);
+        solo.drag(195f, 258f, 1576f, 370f, 25);
         assertEquals(false, okButton.isEnabled());
     }
 
@@ -170,10 +173,9 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<UI> {
     public void testBlockPlacementCornerRuleViolatedCornerNotTouching()throws InterruptedException{
         solo.waitForActivity("UI", 2000);
         newGame();
-        solo.drag(120, 10, 1150, 270, 10);
-        ImageButton okButton = (ImageButton) solo.getView(R.id.ok);
+        solo.drag(141, 11, 1340, 330, 25);
         solo.clickOnView(okButton);
-        solo.drag(470, 500, 1150, 500, 10);
+        solo.drag(195f, 358f, 1576f, 570f, 25);
         assertEquals(false, okButton.isEnabled());
     }
 
