@@ -10,8 +10,6 @@ env:
     - extra
     - platform-tools
     - tools
-    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-    - android-$ANDROID_API_LEVEL
     # For Google Maps API v1
     - addon-google_apis-google-$ANDROID_API_LEVEL
     # Google Play Services
@@ -26,7 +24,8 @@ env:
     
 # Emulator Management: Create, Start and Wait
 before_script:
-  - android create avd -n Nexus5_API28 -k "system-images;android-28;google_apis;x86" --tag "google_apis"
+  - echo y | android update sdk --all --no-ui --filter "sys-img-armeabi-v7a-google_apis-28"
+  - echo "no" | android -v create avd --force -n arm -t "android-28" --abi "google_apis/armeabi-v7a"
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
